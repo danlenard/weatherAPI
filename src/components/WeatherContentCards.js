@@ -1,39 +1,33 @@
 import React, { Component } from 'react';
-import * as API from '../services/API';
 import {Row, Col} from 'reactstrap';
 import '../index.css';
 import WeatherCards from './WeatherCards';
 
+const _ = require('lodash');
+
 class WeatherContentCards extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: []
-        };
-    }
-
-    componentDidMount(){
-        const {city, code}= this.props;
-        API.fetchWeather(city,code)
-        .then(items => {
-            console.log('hi',items)
-            this.setState({
-                items: items.list
-            })
-        })
-    }
-
     render() {
-        const { items } = this.state;
+        const { items } = this.props;
         console.log('items',items);
+        const datesGroup = (_.groupBy(items, item => item.dt_txt.substr(0,item.dt_txt.indexOf(' '))));
+        console.log(Object.values(datesGroup));
         return (
-            <Row>
-                {items.map((item, idx) => (
-                    <Col sm={3} key={idx}>
-                        <WeatherCards className="food-item" content={item}/>
-                    </Col>
-                ))}
-            </Row>
+            <div>
+                {/* {datesGroup.map((date) => (
+                    <div key={date}>
+                        <h3 key={date}>{date}</h3>
+                        <Row>
+                            {items.filter((item) => (
+                                item.dt_txt.substr(0,item.dt_txt.indexOf(' ')) !== date &&
+                                <Col sm={3}>
+                                    <WeatherCards className="food-item" content={item}/>
+                            </Col>
+                            ))}
+                        </Row>
+                    </div>
+                    )
+                )} */}
+            </div>
         );
     }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherSearch from './containers/WeatherSearch';
+import {BrowserRouter, Route} from 'react-router-dom';
 // const logger = store => next => action => {
 //     console.group(action.type)
 //     console.info('dispatching', action)
@@ -22,7 +23,9 @@ import WeatherSearch from './containers/WeatherSearch';
 class Element extends React.Component {
     render() {
         return (
-                <WeatherSearch/>
+                <BrowserRouter>
+                    <Route path='/' component={WeatherSearch}/>
+                </BrowserRouter>
         );
     }
 }

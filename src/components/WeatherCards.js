@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import * as API from '../services/API';
-import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText} from 'reactstrap';
+import { Card, CardBody, CardTitle, CardText,CardImg} from 'reactstrap';
 
 class WeatherCards extends Component {
     render() {
-        const { content } = this.props
-        console.log(moment(content.dt_txt).format('MMMM DD YYYY, h:mm:ss a'),content.rain['3h'])
+        const { content } = this.props;
+        const weather = content.weather.reduce((acc, cur, i) => {
+            acc[i] = cur;
+            return acc;
+          }, {});
+        console.log(weather['0'].main);
         return (
             <Card>
                 <CardBody>
@@ -15,13 +18,14 @@ class WeatherCards extends Component {
                         Temp: {content.main.temp}
                     </CardText>
                     <CardText>
-                        Temp(min): {content.main.temp_min}
+                        Sea level: {content.main.sea_level}
                     </CardText>
                     <CardText>
-                        Temp(max): {content.main.temp_max}
+                        Wind: {content.wind.speed} ms
                     </CardText>
+                    <CardImg top src={`http://openweathermap.org/img/w/${weather['0'].icon}.png`} alt={weather.description} />
                     <CardText>
-                        Rain: {Number(Math.round(((content.rain['3h'])*100))/100)|| 'NO DATA'}%
+                        Weather: {weather['0'].description}
                     </CardText>
                 </CardBody>
             </Card>
