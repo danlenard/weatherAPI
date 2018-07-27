@@ -9,7 +9,7 @@ class WeatherContentCards extends Component {
     render() {
         const { items } = this.props;
         console.log('items',items);
-        const datesGroup = (_.groupBy(items, item => item.dt_txt.substr(0,item.dt_txt.indexOf(' '))));
+        const datesGroup = Object.keys(_.groupBy(items, item => item.dt_txt.substr(0,item.dt_txt.indexOf(' '))));
         console.log(Object.values(datesGroup));
         return (
             <div>
